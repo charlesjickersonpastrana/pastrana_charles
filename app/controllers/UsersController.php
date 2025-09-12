@@ -12,7 +12,7 @@ class UsersController extends Controller {
     public function index(): void
     {
         $data = $this->UsersModel->all();
-        $this->call->view('users/index', ['users' => $data]);
+        $this->call->view('/', ['users' => $data]);
     }
 
     

@@ -23,13 +23,12 @@
     <h1>Create User</h1>
     <form method="post" action="<?= site_url('users/create/'.segment(4)); ?>">
         <label>Username:</label>
-        <input type="text" name="username" 
-               value="<?= html_escape($username['username']); ?>" 
-               required>
+        <input type="text" name="username"
+       value="<?= isset($user['username']) ? html_escape($user['username']) : ''; ?>" required>
 
         <label>Email:</label>
-        <input type="email" name="email" 
-               value="<?= html_escape($email['email']); ?>" 
+        <input type="email" name="email"
+               value="<?= isset($user['email']) ? html_escape($user['email']) : ''; ?>"
                required>
 
         <button type="submit">Save User</button>

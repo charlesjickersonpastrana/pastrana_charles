@@ -23,12 +23,12 @@
     <h1>Update User</h1>
     <form method="post" action="<?= site_url('users/update/'.segment(4)); ?>">
         <label>Username:</label>
-        <input type="text" name="username" 
-               value="<?= html_escape($username['username']); ?>" required>
+        <input type="text" name="username"
+            value="<?= isset($user['username']) ? html_escape($user['username']) : ''; ?>" required>
 
         <label>Email:</label>
         <input type="email" name="email" 
-               value="<?= html_escape($email['email']); ?>" required>
+               value="<?= isset($user['email']) ? html_escape($user['email']) : ''; ?>" required>
 
         <button type="submit">Update User</button>
     </form>

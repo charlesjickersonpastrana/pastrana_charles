@@ -12,7 +12,7 @@ class UsersController extends Controller {
     public function index(): void
     {
         $data = $this->UsersModel->all();
-        $this->call->view('/', ['users' => $data]);
+            $this->call->view('users/index', ['users' => $data]);
     }
 
     
@@ -28,7 +28,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->insert($data)) {
-                header("Location: /");
+                header("Location: ");
                 exit;
             } else {
                 echo "Error in inserting data.";
@@ -56,7 +56,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->update($id, $data)) {
-                header("Location: /");
+                header("Location: ");
                 exit;
             } else {
                 echo "Error in updating data.";
@@ -71,7 +71,7 @@ class UsersController extends Controller {
     public function delete($id): void
     {
         if ($this->UsersModel->delete($id)) {
-            header("Location: /");
+            header("Location: ");
             exit;
         } else {
             echo "Error in deleting data.";

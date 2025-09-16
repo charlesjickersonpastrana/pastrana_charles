@@ -25,7 +25,7 @@
 <body>
     <h1>User Index</h1>
     <div class="top-actions">
-        <a href="/users/create" class="btn btn-create">➕ Create New User</a>
+        <a href="<?= site_url('users/create'); ?>" class="btn btn-create">➕ Create New User</a>
     </div>
     <table>
         <thead>
@@ -40,12 +40,12 @@
             <?php if (!empty($users)): ?>
                 <?php foreach ($users as $user): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($user['id']); ?></td>
-                        <td><?php echo htmlspecialchars($user['username']); ?></td>
-                        <td><?php echo htmlspecialchars($user['email']); ?></td>
+                        <td><?= html_escape($user['id']); ?></td>
+                        <td><?= html_escape($user['username']); ?></td>
+                        <td><?= html_escape($user['email']); ?></td>
                         <td>
-                            <a class="btn btn-edit" href="/users/update/<?php echo urlencode($user['id']); ?>">Edit</a>
-                            <a class="btn btn-delete" href="/users/delete/<?php echo urlencode($user['id']); ?>" onclick="return confirm('Delete this user?');">Delete</a>
+                            <a class="btn btn-edit" href="<?= site_url('users/update/'.$user['id']); ?>">Edit</a>
+                            <a class="btn btn-delete" href="<?= site_url('users/delete/'.$user['id']); ?>" onclick="return confirm('Delete this user?');">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

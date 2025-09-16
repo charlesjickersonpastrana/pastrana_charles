@@ -28,8 +28,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->insert($data)) {
-                header("Location: ");
-                exit;
+                redirect();
             } else {
                 echo "Error in inserting data.";
             }
@@ -56,8 +55,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->update($id, $data)) {
-                header("Location: ");
-                exit;
+                redirect();
             } else {
                 echo "Error in updating data.";
             }
@@ -71,8 +69,7 @@ class UsersController extends Controller {
     public function delete($id): void
     {
         if ($this->UsersModel->delete($id)) {
-            header("Location: ");
-            exit;
+            redirect();
         } else {
             echo "Error in deleting data.";
         }

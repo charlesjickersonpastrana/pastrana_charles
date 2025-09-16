@@ -24,11 +24,11 @@
     <form method="post" action="<?= site_url('users/update/'.segment(4)); ?>">
         <label>Username:</label>
         <input type="text" name="username" 
-               value="<?= html_escape($user['username']); ?>" required>
+               value="<?= html_escape($username['username']); ?>" required>
 
         <label>Email:</label>
         <input type="email" name="email" 
-               value="<?= html_escape($user['email']); ?>" required>
+               value="<?= html_escape($email['email']); ?>" required>
 
         <button type="submit">Update User</button>
     </form>

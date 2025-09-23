@@ -6,7 +6,7 @@
   <title>Users Create</title>
   <style>
     body {
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #3da46fff, #5ab56dff);
       min-height: 100vh;
       display: flex;
       justify-content: center;

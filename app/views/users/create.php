@@ -195,7 +195,7 @@
 
     <!-- Background -->
     <img src="/public/images/bg.jpg" class="bg" alt="background">
-    <img src="/public/images/trees.png" class="trees" alt="trees">
+   
 
     <!-- Create User Form -->
     <div class="form-container">

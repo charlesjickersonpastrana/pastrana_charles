@@ -184,7 +184,7 @@
 
     <!-- Background (optional nature style) -->
     <img src="/public/images/bg.jpg" class="bg">
-    <img src="/public/images/trees.png" class="trees">
+   
 
     <!-- Create User Form -->
     <div class="form-container">

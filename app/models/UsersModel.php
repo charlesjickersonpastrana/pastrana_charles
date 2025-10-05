@@ -67,7 +67,8 @@ class UsersModel extends Model {
                 // Build LIKE conditions
                 $query->like('id', '%'.$q.'%')
                     ->or_like('username', '%'.$q.'%')
-                    ->or_like('email', '%'.$q.'%');
+                    ->or_like('email', '%'.$q.'%')
+                    ->or_like('role', '%'.$q.'%');
                     
                 // Clone before pagination
                 $countQuery = clone $query;

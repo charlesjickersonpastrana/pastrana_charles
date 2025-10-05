@@ -15,7 +15,7 @@ class UsersModel extends Model {
         parent::__construct();
     }
 
-         public function get_user_by_id($id)
+     public function get_user_by_id($id)
     {
         return $this->db->table($this->table)
                         ->where('id', $id)
@@ -55,6 +55,7 @@ class UsersModel extends Model {
 
         return null;
     }
+
 
 
     public function page($q = '', $records_per_page = null, $page = null) {

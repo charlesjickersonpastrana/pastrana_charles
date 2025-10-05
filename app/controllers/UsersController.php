@@ -4,8 +4,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /**
  * Controller: UsersController
  * 
- * Enhanced version with authentication, role management,
- * pagination, and secure CRUD operations.
+ * Enhanced version with proper password hashing & verification,
+ * authentication, role-based access, and pagination.
  */
 
 class UsersController extends Controller {
@@ -19,6 +19,7 @@ class UsersController extends Controller {
         }
     }
 
+    // ✅ INDEX - Show users (Admin: all / User: self only)
     public function index()
     {
         // ✅ Check login
@@ -27,22 +28,15 @@ class UsersController extends Controller {
             exit;
         }
 
-        $logged_in_user = $_SESSION['user']; 
+        $logged_in_user = $_SESSION['user'];
         $data['logged_in_user'] = $logged_in_user;
 
         // ✅ If admin → show all users
         if ($logged_in_user['role'] === 'admin') {
-            $page = 1;
-            if (isset($_GET['page']) && !empty($_GET['page'])) {
-                $page = $this->io->get('page');
-            }
-
-            $q = '';
-            if (isset($_GET['q']) && !empty($_GET['q'])) {
-                $q = trim($this->io->get('q'));
-            }
-
+            $page = isset($_GET['page']) ? $this->io->get('page') : 1;
+            $q = isset($_GET['q']) ? trim($this->io->get('q')) : '';
             $records_per_page = 10;
+
             $users = $this->UsersModel->page($q, $records_per_page, $page);
 
             $data['users'] = $users['records'];
@@ -70,6 +64,7 @@ class UsersController extends Controller {
         $this->call->view('users/index', $data);
     }
 
+    // ✅ CREATE
     public function create()
     {
         if ($this->io->method() === 'post') {
@@ -91,19 +86,19 @@ class UsersController extends Controller {
             } else {
                 echo '❌ Failed to create user.';
             }
-        } 
-        else {
+        } else {
             $this->call->view('users/create');
         }
     }
 
+    // ✅ UPDATE
     public function update($id)
     {
         $logged_in_user = $_SESSION['user'] ?? null;
         $user = $this->UsersModel->get_user_by_id($id);
 
         if (!$user) {
-            echo "User not found.";
+            echo "❌ User not found.";
             return;
         }
 
@@ -137,14 +132,14 @@ class UsersController extends Controller {
             } else {
                 echo '❌ Failed to update user.';
             }
-        } 
-        else {
+        } else {
             $data['user'] = $user;
             $data['logged_in_user'] = $logged_in_user;
             $this->call->view('users/update', $data);
         }
     }
 
+    // ✅ DELETE
     public function delete($id)
     {
         if ($this->UsersModel->delete($id)) {
@@ -154,6 +149,7 @@ class UsersController extends Controller {
         }
     }
 
+    // ✅ REGISTER
     public function register()
     {
         if ($this->io->method() === 'post') {
@@ -178,6 +174,7 @@ class UsersController extends Controller {
         $this->call->view('auth/register');
     }
 
+    // ✅ FIXED LOGIN (uses password_verify)
     public function login()
     {
         $this->call->library('auth');
@@ -190,37 +187,32 @@ class UsersController extends Controller {
             $user = $this->UsersModel->get_user_by_username($username);
 
             if ($user) {
-                if ($this->auth->login($username, $password)) {
+                if (password_verify($password, $user['password'])) {
                     $_SESSION['user'] = [
                         'id'       => $user['id'],
                         'username' => $user['username'],
                         'role'     => $user['role']
                     ];
+
                     redirect('/users');
                 } else {
-                    $error = "Incorrect password!";
+                    $error = "❌ Incorrect password!";
                 }
             } else {
-                $error = "Username not found!";
+                $error = "❌ Username not found!";
             }
         }
 
         $this->call->view('auth/login', ['error' => $error]);
     }
 
+    // ✅ DASHBOARD (with pagination)
     public function dashboard()
     {
-        $page = 1;
-        if (isset($_GET['page']) && !empty($_GET['page'])) {
-            $page = $this->io->get('page');
-        }
-
-        $q = '';
-        if (isset($_GET['q']) && !empty($_GET['q'])) {
-            $q = trim($this->io->get('q'));
-        }
-
+        $page = isset($_GET['page']) ? $this->io->get('page') : 1;
+        $q = isset($_GET['q']) ? trim($this->io->get('q')) : '';
         $records_per_page = 10;
+
         $users = $this->UsersModel->page($q, $records_per_page, $page);
 
         $data['users'] = $users['records'];
@@ -240,10 +232,10 @@ class UsersController extends Controller {
         $this->call->view('users/dashboard', $data);
     }
 
+    // ✅ LOGOUT
     public function logout()
     {
-        $this->call->library('auth');
-        $this->auth->logout();
+        session_destroy();
         redirect('/auth/login');
     }
 }

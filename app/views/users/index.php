@@ -1,195 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Students Info</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #3da46fff, #5ab56dff);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create User</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-        h1 {
-            text-align: center;
-            color: #fff;
-            margin-bottom: 20px; 
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+    section {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      padding: 20px;
+      background: linear-gradient(135deg, #3da46f, #5ab56d);
+    }
 
-        .search-form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;              
-            margin-bottom: 30px;  
-            margin-right: 30px;
-            float: right;  
-        }
+    section .bg,
+    section .trees {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
 
-        .search-form input {
-            width: 350px;           
-            padding: 10px 12px;     
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-        }
+    section .trees {
+      z-index: 100;
+    }
 
-        .search-form button {
-            padding: 10px 18px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 6px;
-        }
-        table {
-            width: 90%;
-            margin: 0 auto 25px;
-            border-collapse: collapse;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
+    .form-container {
+      position: relative;
+      padding: 50px;
+      width: 400px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+      border: 1px solid #fff;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 200;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    }
 
-        th, td {
-            padding: 14px 16px;
-            text-align: left;
-        }
+    .form-container h1 {
+      text-align: center;
+      font-size: 2.2em;
+      font-weight: 600;
+      color: #145a32;
+      margin-bottom: 10px;
+    }
 
-        th {
-            background: blue;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 14px;
-        }
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 15px;
+      background: #fff;
+      color: #333;
+      box-sizing: border-box;
+      transition: 0.3s ease;
+    }
 
-        td {
-            font-size: 15px;
-            color: #444;
-            border-bottom: 1px solid #eee;
-        }
+    .form-group input:focus {
+      outline: none;
+      border: 2px solid #4caf50;
+      box-shadow: 0 0 8px rgba(72, 187, 120, 0.6);
+    }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #28a745, #20c997);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        tr:hover {
-            background-color: #f7f9fc;
-            transition: background-color 0.3s ease;
-        }
+    .btn-submit:hover {
+      background: linear-gradient(to right, #218838, #198754);
+      transform: translateY(-2px);
+    }
 
-        a {
-            margin: 0 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
+    .link-wrapper {
+      text-align: center;
+      margin-top: 10px;
+    }
 
-        a[href*="update"] {
-            color: #fff;
-            background: #17a2b8;
-        }
+    .btn-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #2e7d32;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
 
-        a[href*="update"]:hover {
-            background: #138496;
-        }
+    .btn-link:hover {
+      background: #1b5e20;
+      transform: translateY(-2px);
+    }
 
-        a[href*="delete"] {
-            color: #fff;
-            background: #dc3545;
-        }
+    /* Falling leaves animation */
+    .leaves {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      pointer-events: none;
+    }
 
-        a[href*="delete"]:hover {
-            background: #b02a37;
-        }
+    .leaves .set {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
 
-        
-        .button-container {
-            width: 100%;
-            text-align: center;
-            margin-top: 15px;
-        }
+    .leaves .set div {
+      position: absolute;
+      display: block;
+    }
 
-        .btn-create {
-            display: inline-block;
-            padding: 12px 22px;
-            background: linear-gradient(to right, #28a745, #20c997);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
+    .leaves .set div:nth-child(1) { left: 20%; animation: animate 20s linear infinite; }
+    .leaves .set div:nth-child(2) { left: 50%; animation: animate 14s linear infinite; }
+    .leaves .set div:nth-child(3) { left: 70%; animation: animate 12s linear infinite; }
+    .leaves .set div:nth-child(4) { left: 5%;  animation: animate 15s linear infinite; }
+    .leaves .set div:nth-child(5) { left: 85%; animation: animate 18s linear infinite; }
+    .leaves .set div:nth-child(6) { left: 90%; animation: animate 12s linear infinite; }
+    .leaves .set div:nth-child(7) { left: 15%; animation: animate 14s linear infinite; }
+    .leaves .set div:nth-child(8) { left: 60%; animation: animate 15s linear infinite; }
 
-        .btn-create:hover {
-            background: linear-gradient(to right, #218838, #198754);
-            transform: translateY(-2px);
-        }
-
-      
-        @media (max-width: 768px) {
-            table {
-                width: 100%;
-                font-size: 14px;
-            }
-
-            th, td {
-                padding: 10px;
-            }
-
-            .btn-create {
-                width: 90%;
-            }
-        }
-    </style>
+    @keyframes animate {
+      0%   { opacity: 0; top: -10%; transform: translateX(20px) rotate(0deg); }
+      10%  { opacity: 1; }
+      20%  { transform: translateX(-20px) rotate(45deg); }
+      40%  { transform: translateX(-20px) rotate(90deg); }
+      60%  { transform: translateX(20px) rotate(180deg); }
+      80%  { transform: translateX(-20px) rotate(45deg); }
+      100% { top: 110%; transform: translateX(20px) rotate(225deg); }
+    }
+  </style>
 </head>
 <body>
-    <h1>Students Info</h1>
-    <form action="<?=site_url('users');?>" method="get" class="col-sm-4 float-end d-flex search-form" class="search-form">
-		<?php
-		$q = '';
-		if(isset($_GET['q'])) {
-			$q = $_GET['q'];
-		}
-		?>
-        <input class="form-control me-2" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
-        <button type="submit" class="btn btn-primary" type="button">Search</button>	
-	</form>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-        </tr>
-        <?php foreach (html_escape($user) as $users): ?>
-        <tr>
-            <td><?=$users['id']; ?></td>
-            <td><?=$users['username']; ?></td>
-            <td><?=$users['email']; ?></td>
-            <td>
-                <a href="<?=site_url('/users/update/'.$users['id']);?>">Update</a>
-                <a href="<?=site_url('/users/delete/'.$users['id']);?>">Delete</a>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-    <?php
-	echo $page;?>
-    <div class="button-container">
-        <a href="<?=site_url('users/create'); ?>" class="btn-create">+ Create New User</a>
+  <section>
+    <!-- Falling Leaves -->
+    <div class="leaves">
+      <div class="set">
+        <div><img src="/public/images/leaf_01.png"></div>
+        <div><img src="/public/images/leaf_02.png"></div>
+        <div><img src="/public/images/leaf_03.png"></div>
+        <div><img src="/public/images/leaf_04.png"></div>
+        <div><img src="/public/images/leaf_02.png"></div>
+        <div><img src="/public/images/leaf_03.png"></div>
+        <div><img src="/public/images/leaf_01.png"></div>
+        <div><img src="/public/images/leaf_04.png"></div>
+      </div>
     </div>
+
+    <!-- Background (optional nature style) -->
+    <img src="/public/images/bg.jpg" class="bg">
+    <img src="/public/images/trees.png" class="trees">
+
+    <!-- Create User Form -->
+    <div class="form-container">
+      <h1>Create User</h1>
+      <form id="user-form" action="<?=site_url('users/create/')?>" method="POST">
+        <div class="form-group">
+          <input type="text" id="username" name="username" placeholder="Enter your username" required value="<?= isset($username) ? html_escape($username) : '' ?>" />
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder="Enter your email" required value="<?= isset($email) ? html_escape($email) : '' ?>" />
+        </div>
+        <button type="submit" class="btn-submit">Create User</button>
+      </form>
+
+      <div class="link-wrapper">
+        <a href="<?=site_url('/'); ?>" class="btn-link">Return to Home</a>
+      </div>
+    </div>
+  </section>
 </body>
 </html>

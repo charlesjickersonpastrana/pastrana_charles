@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
@@ -23,8 +23,8 @@
       min-height: 100vh;
     }
 
-    .register {
-      width: 400px;
+    .login {
+      width: 380px;
       padding: 40px 35px;
       border: 1px solid #ccc;
       border-radius: 12px;
@@ -32,11 +32,22 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
-    .register h2 {
+    .login h2 {
       text-align: center;
       font-weight: 600;
       margin-bottom: 25px;
       letter-spacing: 1px;
+    }
+
+    .error-box {
+      background: #f8d7da;
+      color: #842029;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9em;
+      text-align: center;
+      border: 1px solid #f5c2c7;
     }
 
     .inputBox {
@@ -44,8 +55,7 @@
       margin-bottom: 20px;
     }
 
-    .inputBox input,
-    .inputBox select {
+    .inputBox input {
       width: 100%;
       padding: 12px 40px 12px 12px;
       border: 1px solid #aaa;
@@ -55,8 +65,7 @@
       background-color: #f9f9f9;
     }
 
-    .inputBox input:focus,
-    .inputBox select:focus {
+    .inputBox input:focus {
       border-color: #000;
       background-color: #fff;
     }
@@ -90,12 +99,12 @@
     .group {
       text-align: center;
       margin-top: 15px;
+      font-size: 0.95em;
     }
 
     .group a {
       color: #000;
       text-decoration: underline;
-      font-size: 0.95em;
     }
 
     .group a:hover {
@@ -105,59 +114,41 @@
 </head>
 <body>
 
-  <div class="register">
-    <h2>Create Account</h2>
-    <form method="POST" action="<?= site_url('auth/register'); ?>">
+  <div class="login">
+    <h2>Welcome Back</h2>
 
+    <?php if (!empty($error)): ?>
+      <div class="error-box"><?= $error ?></div>
+    <?php endif; ?>
+
+    <form method="POST" action="<?= site_url('auth/login'); ?>">
       <div class="inputBox">
         <input type="text" name="username" placeholder="Username" required>
       </div>
 
       <div class="inputBox">
-        <input type="email" name="email" placeholder="Email" required>
-      </div>
-
-      <div class="inputBox">
-        <input type="password" id="password" name="password" placeholder="Password" required>
+        <input type="password" name="password" id="password" placeholder="Password" required>
         <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
       </div>
 
-      <div class="inputBox">
-        <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required>
-        <i class="fa-solid fa-eye toggle-password" id="toggleConfirmPassword"></i>
-      </div>
-
-      <div class="inputBox">
-        <select name="role" required>
-          <option value="user" selected>User</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-
-      <button type="submit">Register</button>
-
+      <button type="submit">Login</button>
     </form>
 
     <div class="group">
-      <p>Already have an account? <a href="<?= site_url('auth/login'); ?>">Login</a></p>
+      <p>Don't have an account? <a href="<?= site_url('auth/register'); ?>">Register</a></p>
     </div>
   </div>
 
   <script>
-    function toggleVisibility(toggleId, inputId) {
-      const toggle = document.getElementById(toggleId);
-      const input = document.getElementById(inputId);
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
 
-      toggle.addEventListener('click', function () {
-        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-        input.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-      });
-    }
-
-    toggleVisibility('togglePassword', 'password');
-    toggleVisibility('toggleConfirmPassword', 'confirmPassword');
+    togglePassword.addEventListener('click', function () {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
   </script>
 
 </body>

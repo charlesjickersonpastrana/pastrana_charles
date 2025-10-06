@@ -7,14 +7,18 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    body {
+    * {
       font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at top left, #141e30, #243b55);
-      color: #fff;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fff;
+      color: #000;
     }
 
     .dashboard-container {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 50px auto;
       padding: 20px;
     }
@@ -28,46 +32,45 @@
 
     .dashboard-header h2 {
       font-weight: 700;
-      color: #00f2fe;
-      text-shadow: 0 0 10px #00f2fe;
+      letter-spacing: 1px;
     }
 
     .logout-btn {
       padding: 10px 18px;
       border: none;
-      border-radius: 6px;
-      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      border-radius: 8px;
+      background-color: #000;
       color: #fff;
       font-weight: 600;
       transition: 0.3s;
-      box-shadow: 0 0 10px rgba(255,65,108,0.6);
     }
+
     .logout-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(255,75,43,0.8);
+      background-color: #333;
     }
 
     .user-status {
       padding: 12px 18px;
       border-radius: 10px;
       font-size: 14px;
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid rgba(0, 242, 254, 0.3);
-      color: #00f2fe;
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      color: #000;
       margin-bottom: 20px;
     }
+
     .user-status.error {
-      background: rgba(255, 65, 108, 0.1);
-      border: 1px solid rgba(255, 65, 108, 0.3);
-      color: #ff416c;
+      background: #ffeaea;
+      border: 1px solid #ffb3b3;
+      color: #a30000;
     }
 
     .table-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.4);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
     table {
@@ -77,17 +80,17 @@
     }
 
     th {
-      background: #00f2fe;
-      color: #000;
+      background: #000;
+      color: #fff;
       font-size: 14px;
       text-transform: uppercase;
       text-align: center;
     }
 
     td {
-      background: rgba(255,255,255,0.05);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      color: #fff;
+      background: #f9f9f9;
+      border-bottom: 1px solid #eee;
+      color: #000;
       text-align: center;
     }
 
@@ -103,37 +106,33 @@
     }
 
     a.btn-update {
-      background: linear-gradient(90deg, #00f2fe, #4facfe);
-      box-shadow: 0 0 10px rgba(0,242,254,0.5);
+      background-color: #000;
     }
     a.btn-update:hover {
-      box-shadow: 0 0 20px rgba(79,172,254,0.8);
+      background-color: #333;
     }
 
     a.btn-delete {
-      background: linear-gradient(90deg, #ff416c, #ff4b2b);
-      box-shadow: 0 0 10px rgba(255,65,108,0.5);
+      background-color: #a30000;
     }
     a.btn-delete:hover {
-      box-shadow: 0 0 20px rgba(255,75,43,0.8);
+      background-color: #d10000;
     }
 
     .btn-create {
       width: 100%;
       padding: 14px;
       border: none;
-      background: linear-gradient(90deg, #00f2fe, #4facfe);
-      color: #000;
+      background-color: #000;
+      color: #fff;
       font-size: 1.1em;
       border-radius: 10px;
       font-weight: 600;
       transition: 0.3s;
-      margin-top: 20px;
-      box-shadow: 0 0 15px rgba(0,242,254,0.6);
+      margin-top: 25px;
     }
     .btn-create:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(79,172,254,0.8);
+      background-color: #333;
     }
 
     .pagination-container {
@@ -144,30 +143,32 @@
 
     .search-form input {
       border-radius: 8px;
-      border: 1px solid rgba(0,242,254,0.4);
-      background: rgba(255,255,255,0.08);
-      color: #fff;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      color: #000;
     }
+
     .search-form input:focus {
       outline: none;
-      border: 1px solid #00f2fe;
-      box-shadow: 0 0 10px #00f2fe;
-      background: rgba(255,255,255,0.15);
+      border-color: #000;
+      background: #fff;
     }
 
     .search-form button {
-      background: #00f2fe;
+      background: #000;
       border: none;
-      color: #000;
+      color: #fff;
       font-weight: 600;
       border-radius: 8px;
       padding: 8px 16px;
     }
+
     .search-form button:hover {
-      box-shadow: 0 0 15px #00f2fe;
+      background-color: #333;
     }
   </style>
 </head>
+
 <body>
   <div class="dashboard-container">
     
@@ -218,7 +219,7 @@
               <td><?= html_escape($user['role']); ?></td>
             <?php endif; ?>
             <td>
-              <a href="<?=site_url('/users/update/'.$user['id']);?>" class="btn-action btn-update">Update</a>
+              <a href="<?=site_url('/users/update/'.$user['id']);?>" class="btn-action btn-update">Edit</a>
               <a href="<?=site_url('/users/delete/'.$user['id']);?>" class="btn-action btn-delete">Delete</a>
             </td>
           </tr>

@@ -15,38 +15,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #0b0c1b;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Floating background squares */
-    body::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 50px,
-        rgba(255, 255, 255, 0.02) 50px,
-        rgba(255, 255, 255, 0.02) 100px
-      );
-      z-index: 0;
+      background-color: #f4f4f4;
+      color: #333;
     }
 
     /* Card container */
     .form-card {
-      position: relative;
-      z-index: 10;
-      background: #141625;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       padding: 40px 35px;
       width: 350px;
       text-align: center;
-      color: #fff;
     }
 
     /* Title */
@@ -54,8 +34,7 @@
       font-size: 1.8em;
       font-weight: 600;
       margin-bottom: 25px;
-      color: #00e5ff;
-      text-shadow: 0 0 10px #00e5ff;
+      color: #000;
     }
 
     /* Input fields */
@@ -68,10 +47,10 @@
     .form-group select {
       width: 100%;
       padding: 12px 15px;
-      border: none;
+      border: 1px solid #ccc;
       border-radius: 6px;
-      background: #1f2233;
-      color: #fff;
+      background: #f9f9f9;
+      color: #333;
       font-size: 0.95em;
       outline: none;
       transition: 0.3s;
@@ -79,8 +58,9 @@
 
     .form-group input:focus,
     .form-group select:focus {
-      box-shadow: 0 0 8px #00e5ff;
-      border: 1px solid #00e5ff;
+      border-color: #000;
+      background: #fff;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     }
 
     /* Password toggle icon */
@@ -90,7 +70,7 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #00e5ff;
+      color: #555;
     }
 
     /* Button styles */
@@ -102,44 +82,44 @@
       font-weight: 600;
       font-size: 1em;
       cursor: pointer;
-      background: linear-gradient(90deg, #00ffcc, #00bfff);
-      color: #000;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      background: #000;
+      color: #fff;
       transition: 0.3s;
     }
 
     .btn-submit:hover {
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
-      transform: scale(1.03);
+      background: #333;
+      transform: scale(1.02);
     }
 
     /* Return button */
     .btn-return {
       display: block;
       margin-top: 20px;
-      color: #00e5ff;
+      color: #000;
       text-decoration: none;
       font-size: 0.9em;
       transition: 0.3s;
     }
 
     .btn-return:hover {
-      text-shadow: 0 0 8px #00e5ff;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="form-card">
     <h1>Update User</h1>
-    <form action="<?=site_url('users/update/'.$user['id'])?>" method="POST">
+    <form action="<?= site_url('users/update/'.$user['id']) ?>" method="POST">
       <div class="form-group">
-        <input type="text" name="username" value="<?=html_escape($user['username']);?>" placeholder="Username" required>
-      </div>
-      <div class="form-group">
-        <input type="email" name="email" value="<?=html_escape($user['email']);?>" placeholder="Email" required>
+        <input type="text" name="username" value="<?= html_escape($user['username']); ?>" placeholder="Username" required>
       </div>
 
-      <?php if(!empty($logged_in_user) && $logged_in_user['role'] === 'admin'): ?>
+      <div class="form-group">
+        <input type="email" name="email" value="<?= html_escape($user['email']); ?>" placeholder="Email" required>
+      </div>
+
+      <?php if (!empty($logged_in_user) && $logged_in_user['role'] === 'admin'): ?>
         <div class="form-group">
           <select name="role" required>
             <option value="user" <?= $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
@@ -155,7 +135,7 @@
 
       <button type="submit" class="btn-submit">Update User</button>
     </form>
-    <a href="<?=site_url('/users');?>" class="btn-return">Return to Home</a>
+    <a href="<?= site_url('/users'); ?>" class="btn-return">Return to Home</a>
   </div>
 
   <script>

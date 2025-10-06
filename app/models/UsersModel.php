@@ -3,11 +3,9 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
  * Model: UsersModel
- * 
- * Automatically generated via CLI.
  */
 class UsersModel extends Model {
-    protected $table = 'user';
+    protected $table = 'users'; // ✅ Corrected table name
     protected $primary_key = 'id';
 
     public function __construct()
@@ -15,7 +13,7 @@ class UsersModel extends Model {
         parent::__construct();
     }
 
-     public function get_user_by_id($id)
+    public function get_user_by_id($id)
     {
         return $this->db->table($this->table)
                         ->where('id', $id)
@@ -29,14 +27,14 @@ class UsersModel extends Model {
                         ->get();
     }
 
-    public function update_password($user_id, $new_password) {
-    return $this->db->table($this->table)
-                    ->where('id', $user_id)
-                    ->update([
-                        'password' => password_hash($new_password, PASSWORD_DEFAULT)
-                    ]);
+    public function update_password($user_id, $new_password)
+    {
+        return $this->db->table($this->table)
+                        ->where('id', $user_id)
+                        ->update([
+                            'password' => password_hash($new_password, PASSWORD_DEFAULT)
+                        ]);
     }
-
 
     public function get_all_user()
     {
@@ -56,32 +54,27 @@ class UsersModel extends Model {
         return null;
     }
 
+    public function page($q = '', $records_per_page = null, $page = null)
+    {
+        if (is_null($page)) {
+            return $this->db->table('users')->get_all(); // ✅ Corrected
+        } else {
+            $query = $this->db->table('users'); // ✅ Corrected
 
+            $query->like('id', '%'.$q.'%')
+                ->or_like('username', '%'.$q.'%')
+                ->or_like('email', '%'.$q.'%')
+                ->or_like('role', '%'.$q.'%');
+            
+            $countQuery = clone $query;
 
-    public function page($q = '', $records_per_page = null, $page = null) {
- 
-            if (is_null($page)) {
-                return $this->db->table('user')->get_all();
-            } else {
-                $query = $this->db->table('user');
+            $data['total_rows'] = $countQuery->select_count('*', 'count')
+                                            ->get()['count'];
 
-                // Build LIKE conditions
-                $query->like('id', '%'.$q.'%')
-                    ->or_like('username', '%'.$q.'%')
-                    ->or_like('email', '%'.$q.'%')
-                    ->or_like('role', '%'.$q.'%');
-                    
-                // Clone before pagination
-                $countQuery = clone $query;
+            $data['records'] = $query->pagination($records_per_page, $page)
+                                    ->get_all();
 
-                $data['total_rows'] = $countQuery->select_count('*', 'count')
-                                                ->get()['count'];
-
-                $data['records'] = $query->pagination($records_per_page, $page)
-                                        ->get_all();
-
-                return $data;
-            }
+            return $data;
         }
-
+    }
 }

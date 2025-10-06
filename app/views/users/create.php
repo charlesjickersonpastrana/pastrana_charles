@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <title>Create User</title>
   <style>
     * {
       margin: 0;
@@ -14,199 +12,210 @@
       font-family: "Poppins", sans-serif;
     }
 
-    body {
+    section {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: #0f0f1a;
+      width: 100%;
+      height: 100vh;
       overflow: hidden;
+      padding: 20px;
+      background: linear-gradient(135deg, #3da46f, #5ab56d);
     }
 
-    /* Floating background circles (same as login) */
-    .circles {
+    section .bg,
+    section .trees {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      z-index: 0;
+      object-fit: cover;
+      pointer-events: none;
     }
 
-    .circles li {
-      position: absolute;
-      display: block;
-      list-style: none;
-      width: 25px;
-      height: 25px;
-      background: rgba(255, 255, 255, 0.1);
-      animation: animate 20s linear infinite;
-      bottom: -150px;
-      border-radius: 50%;
+    section .trees {
+      z-index: 100;
     }
 
-    .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-duration: 15s; }
-    .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-duration: 10s; }
-    .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-duration: 20s; }
-    .circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-duration: 18s; }
-    .circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-duration: 12s; }
-    .circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-duration: 25s; }
-    .circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-duration: 35s; }
-    .circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-duration: 45s; }
-    .circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-duration: 11s; }
-    .circles li:nth-child(10){ left: 85%; width: 150px; height: 150px; animation-duration: 30s; }
-
-    @keyframes animate {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
-      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
-    }
-
-    /* Register Card */
-    .register {
+    .form-container {
       position: relative;
-      width: 380px;
       padding: 50px 40px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 400px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+      border: 1px solid #fff;
       border-radius: 20px;
-      backdrop-filter: blur(18px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
-      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 200;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
     }
 
-    .register h2 {
+    .form-container h1 {
       text-align: center;
-      font-size: 2em;
+      font-size: 2.2em;
       font-weight: 600;
-      margin-bottom: 25px;
-      color: #00e5ff;
-      text-shadow: 0 0 10px #00e5ff;
-    }
-
-    .inputBox {
-      position: relative;
-      margin-bottom: 25px;
-    }
-
-    .inputBox input,
-    .inputBox select {
-      width: 100%;
-      padding: 14px 45px 14px 15px;
-      font-size: 1em;
       color: #fff;
-      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+      font-size: 0.95em;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1em;
+      border-radius: 6px;
       border: none;
+      background: #fff;
+      color: #333;
+      box-sizing: border-box;
+      transition: border 0.3s ease;
+    }
+
+    .form-group input:focus {
       outline: none;
-      border-radius: 10px;
+        border: 2px solid #667eea;
+      box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
     }
 
-    .inputBox input::placeholder {
-      color: #bbb;
-    }
-
-    .register button {
+    .btn-submit {
       width: 100%;
       padding: 14px;
+      background: linear-gradient(to right, #28a745, #20c997);
+      color: #fff;
       border: none;
-      background: linear-gradient(90deg, #00e5ff, #00ffa3);
-      color: #0f0f1a;
+      border-radius: 8px;
       font-size: 1.1em;
       font-weight: 600;
-      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
-      text-transform: uppercase;
+      transition: 0.4s;
     }
 
-    .register button:hover {
-      opacity: 0.8;
-      box-shadow: 0 0 15px #00ffa3;
+    .btn-submit:hover {
+      background: linear-gradient(to right, #218838, #198754);
+      transform: translateY(-2px);
     }
 
-    .group {
+    .link-wrapper {
       text-align: center;
       margin-top: 15px;
     }
 
-    .group a {
-      font-size: 0.95em;
-      color: #00e5ff;
+    .btn-link {
+      display: inline-block;
+      padding: 12px 20px;
+      background: linear-gradient(to right, #373bff, #282ca7);
+      color: #fff;
       text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: 0.3s;
     }
 
-    .group a:hover {
-      text-decoration: underline;
+    .btn-link:hover {
+      background: linear-gradient(to right, #2529b0, #1f2380);
+      transform: translateY(-2px);
     }
 
-    .toggle-password {
+    /* Falling leaves animation */
+    .leaves {
       position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 1.1em;
-      color: #00e5ff;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .leaves .set {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .leaves .set div {
+      position: absolute;
+      display: block;
+    }
+
+    .leaves .set div:nth-child(1) { left: 20%; animation: animate 20s linear infinite; }
+    .leaves .set div:nth-child(2) { left: 50%; animation: animate 14s linear infinite; }
+    .leaves .set div:nth-child(3) { left: 70%; animation: animate 12s linear infinite; }
+    .leaves .set div:nth-child(4) { left: 5%;  animation: animate 15s linear infinite; }
+    .leaves .set div:nth-child(5) { left: 85%; animation: animate 18s linear infinite; }
+    .leaves .set div:nth-child(6) { left: 90%; animation: animate 12s linear infinite; }
+    .leaves .set div:nth-child(7) { left: 15%; animation: animate 14s linear infinite; }
+    .leaves .set div:nth-child(8) { left: 60%; animation: animate 15s linear infinite; }
+
+    @keyframes animate {
+      0%   { opacity: 0; top: -10%; transform: translateX(20px) rotate(0deg); }
+      10%  { opacity: 1; }
+      20%  { transform: translateX(-20px) rotate(45deg); }
+      40%  { transform: translateX(-20px) rotate(90deg); }
+      60%  { transform: translateX(20px) rotate(180deg); }
+      80%  { transform: translateX(-20px) rotate(45deg); }
+      100% { top: 110%; transform: translateX(20px) rotate(225deg); }
     }
   </style>
 </head>
 <body>
-  <!-- Background circles -->
-  <ul class="circles">
-    <li></li><li></li><li></li><li></li><li></li>
-    <li></li><li></li><li></li><li></li><li></li>
-  </ul>
-
-  <!-- Register Card -->
-  <div class="register">
-    <h2>Register</h2>
-
-    <?php if (!empty($error)): ?>
-      <div style="background: rgba(255,0,0,0.15); color: #ff7b7b; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 0.9em;">
-        <?= $error ?>
+  <section>
+    <!-- Falling Leaves -->
+    <div class="leaves">
+      <div class="set">
+        <div><img src="/public/images/leaf_03.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_02.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_03.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_04.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_01.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_02.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_03.png" alt="leaf"></div>
+        <div><img src="/public/images/leaf_04.png" alt="leaf"></div>
       </div>
-    <?php endif; ?>
-
-    <form method="post" action="<?= site_url('auth/register') ?>">
-      <div class="inputBox">
-        <input type="text" placeholder="Username" name="username" required>
-      </div>
-
-      <div class="inputBox">
-        <input type="email" placeholder="Email" name="email" required>
-      </div>
-
-      <div class="inputBox">
-        <input type="password" placeholder="Password" name="password" id="password" required>
-        <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
-      </div>
-
-      <div class="inputBox">
-        <select name="role" required>
-          <option value="" disabled selected>Select Role</option>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-
-      <button type="submit">Register</button>
-    </form>
-
-    <div class="group">
-      <p style="font-size: 0.9em;">
-        Already have an account? <a href="<?= site_url('auth/login'); ?>">Login here</a>
-      </p>
     </div>
-  </div>
 
-  <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+    <!-- Background -->
+    <img src="/public/images/bg.jpg" class="bg" alt="background">
+   
 
-    togglePassword.addEventListener('click', function () {
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      this.classList.toggle('fa-eye');
-      this.classList.toggle('fa-eye-slash');
-    });
-  </script>
+    <!-- Create User Form -->
+    <div class="form-container">
+      <h1>Create User</h1>
+      <form id="user-form" action="<?=site_url('users/create/')?>" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter username" required value="<?= isset($username) ? html_escape($username) : '' ?>">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter email" required value="<?= isset($email) ? html_escape($email) : '' ?>">
+        </div>
+        <button type="submit" class="btn-submit">Create User</button>
+      </form>
+
+      <div class="link-wrapper">
+        <a href="<?=site_url('/users'); ?>" class="btn-link">Return to Home</a>
+      </div>
+    </div>
+  </section>
 </body>
 </html>

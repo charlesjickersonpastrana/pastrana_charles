@@ -13,7 +13,7 @@
     }
 
     body {
-      background-color: #fff;
+      background-color: #797979ff;
       color: #000;
     }
 

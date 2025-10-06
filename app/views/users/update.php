@@ -6,218 +6,169 @@
   <title>Update User</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * {
+    /* Background */
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       font-family: "Poppins", sans-serif;
-    }
-
-    section {
-      position: relative;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100vh;
+      background-color: #0b0c1b;
       overflow: hidden;
-      padding: 20px;
-      background: linear-gradient(135deg, #3da46f, #5ab56d);
+      position: relative;
     }
 
-    section .bg,
-    section .trees {
+    /* Floating background squares */
+    body::before {
+      content: "";
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      pointer-events: none;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 50px,
+        rgba(255, 255, 255, 0.02) 50px,
+        rgba(255, 255, 255, 0.02) 100px
+      );
+      z-index: 0;
     }
 
-    section .trees {
-      z-index: 100;
-    }
-
-    .form-container {
+    /* Card container */
+    .form-card {
       position: relative;
-      padding: 50px;
-      width: 400px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(15px);
-      border: 1px solid #fff;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 200;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-    }
-
-    .form-container h1 {
+      z-index: 10;
+      background: #141625;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+      padding: 40px 35px;
+      width: 350px;
       text-align: center;
-      font-size: 2.2em;
-      font-weight: 600;
-      color: #145a32;
-      margin-bottom: 10px;
+      color: #fff;
     }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
+    /* Title */
+    .form-card h1 {
+      font-size: 1.8em;
       font-weight: 600;
-      color: #145a32;
-      font-size: 15px;
+      margin-bottom: 25px;
+      color: #00e5ff;
+      text-shadow: 0 0 10px #00e5ff;
     }
 
-    .form-group input {
+    /* Input fields */
+    .form-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group select {
       width: 100%;
       padding: 12px 15px;
-      font-size: 1em;
-      border-radius: 6px;
       border: none;
-      background: #fff;
-      color: #333;
-      box-sizing: border-box;
-      transition: 0.3s ease;
-    }
-
-    .form-group input:focus {
+      border-radius: 6px;
+      background: #1f2233;
+      color: #fff;
+      font-size: 0.95em;
       outline: none;
-      border: 2px solid #4caf50;
-      box-shadow: 0 0 8px rgba(72, 187, 120, 0.6);
+      transition: 0.3s;
     }
 
+    .form-group input:focus,
+    .form-group select:focus {
+      box-shadow: 0 0 8px #00e5ff;
+      border: 1px solid #00e5ff;
+    }
+
+    /* Password toggle icon */
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #00e5ff;
+    }
+
+    /* Button styles */
     .btn-submit {
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(to right, #28a745, #20c997);
-      color: #fff;
+      padding: 12px;
       border: none;
       border-radius: 6px;
-      font-size: 1.1em;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 1em;
       cursor: pointer;
+      background: linear-gradient(90deg, #00ffcc, #00bfff);
+      color: #000;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
       transition: 0.3s;
     }
 
     .btn-submit:hover {
-      background: linear-gradient(to right, #218838, #198754);
-      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+      transform: scale(1.03);
     }
 
-    .error-message {
-      color: #ffb3b3;
-      margin-top: 6px;
-      font-size: 13px;
-      display: none;
-    }
-
+    /* Return button */
     .btn-return {
       display: block;
-      text-align: center;
-      margin-top: 10px;
-      padding: 12px;
-      background: linear-gradient(to right, #373bff, #282ca7);
-      color: #fff;
-      border-radius: 8px;
+      margin-top: 20px;
+      color: #00e5ff;
       text-decoration: none;
-      font-weight: 500;
+      font-size: 0.9em;
       transition: 0.3s;
     }
 
     .btn-return:hover {
-      background: linear-gradient(to right, #2529b0, #1f2380);
-      transform: translateY(-2px);
-    }
-
-    /* Falling leaves animation */
-    .leaves {
-      position: absolute;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      pointer-events: none;
-    }
-
-    .leaves .set {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-    }
-
-    .leaves .set div {
-      position: absolute;
-      display: block;
-    }
-
-    .leaves .set div:nth-child(1) { left: 20%; animation: animate 20s linear infinite; }
-    .leaves .set div:nth-child(2) { left: 50%; animation: animate 14s linear infinite; }
-    .leaves .set div:nth-child(3) { left: 70%; animation: animate 12s linear infinite; }
-    .leaves .set div:nth-child(4) { left: 5%;  animation: animate 15s linear infinite; }
-    .leaves .set div:nth-child(5) { left: 85%; animation: animate 18s linear infinite; }
-    .leaves .set div:nth-child(6) { left: 90%; animation: animate 12s linear infinite; }
-    .leaves .set div:nth-child(7) { left: 15%; animation: animate 14s linear infinite; }
-    .leaves .set div:nth-child(8) { left: 60%; animation: animate 15s linear infinite; }
-
-    @keyframes animate {
-      0%   { opacity: 0; top: -10%; transform: translateX(20px) rotate(0deg); }
-      10%  { opacity: 1; }
-      20%  { transform: translateX(-20px) rotate(45deg); }
-      40%  { transform: translateX(-20px) rotate(90deg); }
-      60%  { transform: translateX(20px) rotate(180deg); }
-      80%  { transform: translateX(-20px) rotate(45deg); }
-      100% { top: 110%; transform: translateX(20px) rotate(225deg); }
+      text-shadow: 0 0 8px #00e5ff;
     }
   </style>
 </head>
 <body>
-  <section>
-    <!-- Falling Leaves -->
-    <div class="leaves">
-      <div class="set">
-        <div><img src="/public/images/leaf_01.png"></div>
-        <div><img src="/public/images/leaf_02.png"></div>
-        <div><img src="/public/images/leaf_03.png"></div>
-        <div><img src="/public/images/leaf_04.png"></div>
-        <div><img src="/public/images/leaf_02.png"></div>
-        <div><img src="/public/images/leaf_03.png"></div>
-        <div><img src="/public/images/leaf_01.png"></div>
-        <div><img src="/public/images/leaf_04.png"></div>
+  <div class="form-card">
+    <h1>Update User</h1>
+    <form action="<?=site_url('users/update/'.$user['id'])?>" method="POST">
+      <div class="form-group">
+        <input type="text" name="username" value="<?=html_escape($user['username']);?>" placeholder="Username" required>
       </div>
-    </div>
+      <div class="form-group">
+        <input type="email" name="email" value="<?=html_escape($user['email']);?>" placeholder="Email" required>
+      </div>
 
-    <!-- Background (optional nature style) -->
-    <img src="/public/images/bg.jpg" class="bg">
-  
-
-    <!-- Update User Form -->
-    <div class="form-container">
-      <h1>Update User</h1>
-      <form action="<?=site_url('users/update/'.$user['id'])?>" method="POST" novalidate>
+      <?php if(!empty($logged_in_user) && $logged_in_user['role'] === 'admin'): ?>
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" value="<?=html_escape($user['username']);?>" placeholder="Enter your username" required>
+          <select name="role" required>
+            <option value="user" <?= $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
+            <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" value="<?=html_escape($user['email']);?>" placeholder="Enter your email" required>
+          <input type="password" placeholder="Password" name="password" id="password" required>
+          <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
         </div>
+      <?php endif; ?>
 
-        <button type="submit" class="btn-submit">Update User</button>
-      </form>
+      <button type="submit" class="btn-submit">Update User</button>
+    </form>
+    <a href="<?=site_url('/users');?>" class="btn-return">Return to Home</a>
+  </div>
 
-    <div class="link-wrapper">
-      <a href="<?=site_url('/'); ?>" class="btn-return">Return to Home</a>
-    </div>
-  </section>
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    if (togglePassword) {
+      togglePassword.addEventListener('click', function () {
+        const type = password.type === 'password' ? 'text' : 'password';
+        password.type = type;
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    }
+  </script>
 </body>
 </html>

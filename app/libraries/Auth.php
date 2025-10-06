@@ -27,7 +27,7 @@ class Auth {
     public function register($username, $email, $password, $role = 'user')
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        return $this->_lava->db->table('users')->insert([
+        return $this->_lava->db->table('user')->insert([
             'username' => $username,
             'email'    => $email,
             'password' => $hash,
@@ -45,7 +45,7 @@ class Auth {
      */
     public function login($username, $password)
     {
-        $user = $this->_lava->db->table('users')
+        $user = $this->_lava->db->table('user')
                          ->where('username', $username)
                          ->get();
 

@@ -24,21 +24,7 @@
       width: 100%;
       height: 100vh;
       overflow: hidden;
-    }
-
-    section .bg,
-    section .trees {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
-
-    section .trees {
-      z-index: 100;
+      background: linear-gradient(135deg, #3da46f, #5ab56d);
     }
 
     .login {
@@ -50,7 +36,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.5);
       border-right: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 20px;
-      width: 500px;
+      width: 400px;
       display: flex;
       flex-direction: column;
       gap: 30px;
@@ -60,9 +46,9 @@
 
     .login h2 {
       text-align: center;
-      font-size: 2.5em;
+      font-size: 2em;
       font-weight: 600;
-      color: #8f2c24;
+      color: #2e633f;
     }
 
     .login .inputBox {
@@ -73,15 +59,15 @@
     .login .inputBox input {
       width: 100%;
       padding: 15px 45px 15px 20px;
-      font-size: 1.25em;
-      color: #8f2c24;
+      font-size: 1.1em;
+      color: #2e633f;
       border-radius: 5px;
       background: #fff;
       border: none;
     }
 
     .login .inputBox ::placeholder {
-      color: #8f2c24;
+      color: #2e633f;
     }
 
     .toggle-password {
@@ -91,14 +77,14 @@
       transform: translateY(-50%);
       cursor: pointer;
       font-size: 1.2em;
-      color: #8f2c24;
+      color: #2e633f;
     }
 
     .login button {
       width: 100%;
       padding: 15px;
       border: none;
-      background: #8f2c24;
+      background: #2e633f;
       color: #fff;
       font-size: 1.25em;
       font-weight: 500;
@@ -108,7 +94,7 @@
     }
 
     .login button:hover {
-      background: #d64c42;
+      background: #3da46f;
     }
 
     .group {
@@ -117,7 +103,7 @@
 
     .group a {
       font-size: 1em;
-      color: #8f2c24;
+      color: #2e633f;
       font-weight: 500;
       text-decoration: none;
     }
@@ -194,7 +180,7 @@
       <h2>Login</h2>
 
       <?php if (!empty($error)): ?>
-        <div style="background: rgba(255,0,0,0.1); color: #d64c42; padding: 10px; border: 1px solid #d64c42; border-radius: 5px; margin-bottom: 15px; text-align: center; font-size: 0.95em;">
+        <div style="background: rgba(255,0,0,0.1); color: #d64c42; padding: 10px; border: 1px solid #d64c42; border-radius: 5px; margin-bottom: 15px; text-align: center;">
           <?= $error ?>
         </div>
       <?php endif; ?>
@@ -209,13 +195,11 @@
           <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
         </div>
 
-        <button type="submit" id="btn">Login</button>
+        <button type="submit">Login</button>
       </form>
 
       <div class="group">
-        <p style="font-size: 0.9em;">
-          Don't have an account? <a href="<?= site_url('auth/register'); ?>">Register here</a>
-        </p>
+        <p>Don't have an account? <a href="<?= site_url('auth/register'); ?>">Register here</a></p>
       </div>
     </div>
   </section>
